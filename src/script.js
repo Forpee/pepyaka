@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui';
 import vertexShader from './shaders/vertex.glsl';
 import fragmentShader from './shaders/fragment.glsl';
+import vertexShaderParticles from './shaders/vertexParticles.glsl';
+import fragmentShaderParticles from './shaders/fragmentParticles.glsl';
 import gsap from 'gsap';
 /**
  * Base
@@ -32,6 +34,33 @@ const material = new THREE.ShaderMaterial({
     fragmentShader: fragmentShader,
     side: THREE.DoubleSide
 });
+
+const materialParticles = new THREE.ShaderMaterial({
+    uniforms: {
+        uTime: { value: 0 },
+    },
+    vertexShader: vertexShaderParticles,
+    fragmentShader: fragmentShaderParticles,
+    side: THREE.DoubleSide
+});
+
+let n = 1000;
+
+let positions = new Float32Array(n * 3);
+let geometryParticles = new THREE.BufferGeometry();
+
+for (let i = 0; i < n; i++) {
+    positions[i * 3 + 0] = Math.random() * 2 - 1;
+    positions[i * 3 + 1] = Math.random() * 2 - 1;
+    positions[i * 3 + 2] = Math.random() * 2 - 1;
+
+}
+
+geometryParticles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+// points
+const points = new THREE.Points(geometryParticles, materialParticles);
+scene.add(points);
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
