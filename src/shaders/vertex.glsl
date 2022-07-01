@@ -1,5 +1,6 @@
 varying vec2 vUv;
 varying vec3 vColor;
+varying vec3 vNormal;
 uniform float uTime;
 
 //	Simplex 3D Noise
@@ -90,6 +91,9 @@ float snoise(vec3 v){
                 
                 float noise=snoise(position*10.+uTime);
                 vec3 newpos=position*(noise+.5);
+                
+                vColor==hsv2rgb(vec3(noise*.1+.03,.8,.8));
+                
                 gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);
                 
                 vUv=uv;
