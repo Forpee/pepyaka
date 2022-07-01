@@ -4,5 +4,6 @@ varying vec2 vUv;
 
 void main()
 {
+    vec3 light=vec3(0.);
     gl_FragColor=vec4(vUv,1.,1.);
 }
