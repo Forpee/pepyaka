@@ -75,6 +75,12 @@ float snoise(vec3 v){
                 dot(p2,x2),dot(p3,x3)));
             }
             
+            vec3 hsv2rgb(vec3 c){
+                vec4 K=vec4(1.,2./3.,1./3.,3.);
+                vec3 p=abs(fract(c.xxx+K.xyz)*6.-K.www);
+                return c.z*mix(K.xxx,clamp(p-K.xxx,0.,1.),c.y);
+            }
+            
             void main()
             {
                 // vec4 mvPosition=modelViewMatrix*vec4(position,1.);
