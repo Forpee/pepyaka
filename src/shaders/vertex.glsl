@@ -89,10 +89,10 @@ float snoise(vec3 v){
                 // vec4 mvPosition=modelViewMatrix*vec4(position,1.);
                 // gl_PointSize=100.*(1./-mvPosition.z);
                 
-                float noise=snoise(position*10.+uTime);
+                float noise=snoise(position*20.+uTime);
                 vec3 newpos=position*(noise+.5);
                 
-                vColor==hsv2rgb(vec3(noise*.1+.03,.8,.8));
+                vColor=hsv2rgb(vec3(noise*.1+.03,.8,.8));
                 vNormal=normal;
                 
                 gl_Position=projectionMatrix*modelViewMatrix*vec4(newpos,1.);

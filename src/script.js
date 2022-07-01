@@ -21,7 +21,7 @@ const scene = new THREE.Scene();
  * Test mesh
  */
 // Geometry
-const geometry = new THREE.SphereBufferGeometry(1, 64, 64);
+const geometry = new THREE.SphereBufferGeometry(1, 256, 256);
 
 // Material
 const material = new THREE.ShaderMaterial({
