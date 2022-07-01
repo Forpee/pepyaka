@@ -2,6 +2,7 @@ uniform float uTime;
 
 varying vec2 vUv;
 varying vec3 vNormal;
+varying vec3 vColor;
 
 void main()
 {
@@ -12,5 +13,7 @@ void main()
     vec3 lightDirection=normalize(vec3(0.,1.,1.));
     light+=dot(lightDirection,vNormal);
     
-    gl_FragColor=vec4(vUv,1.,1.);
+    light=mix(skyColor,groundColor,dot(lightDirection,vNormal));
+    
+    gl_FragColor=vec4(light*vColor,1.);
 }
