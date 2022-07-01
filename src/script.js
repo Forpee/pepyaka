@@ -41,18 +41,27 @@ const materialParticles = new THREE.ShaderMaterial({
     },
     vertexShader: vertexShaderParticles,
     fragmentShader: fragmentShaderParticles,
-    side: THREE.DoubleSide
+    side: THREE.DoubleSide,
+    transparent: true,
 });
 
-let n = 1000;
+let n = 10000;
 
 let positions = new Float32Array(n * 3);
 let geometryParticles = new THREE.BufferGeometry();
 
+let inc = Math.PI * (3 - Math.sqrt(5));
+let off = 2 / n;
+let rad = 1.7;
+
 for (let i = 0; i < n; i++) {
-    positions[i * 3 + 0] = Math.random() * 2 - 1;
-    positions[i * 3 + 1] = Math.random() * 2 - 1;
-    positions[i * 3 + 2] = Math.random() * 2 - 1;
+
+    let y = i * off - 1 + (off / 2);
+    let r = Math.sqrt(1 - y * y);
+    let phi = i * inc;
+    positions[i * 3 + 0] = rad * Math.cos(phi) * r;
+    positions[i * 3 + 1] = rad * y;
+    positions[i * 3 + 2] = rad * Math.sin(phi) * r;
 
 }
 
@@ -96,7 +105,7 @@ window.addEventListener('resize', () => {
 
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.set(0, 0, 3);
+camera.position.set(0, 0, 4);
 scene.add(camera);
 
 // Controls
@@ -123,9 +132,10 @@ const tick = () => {
 
     // Get elapsedtime
     const elapsedTime = clock.getElapsedTime();
-
+    points.rotation.y = elapsedTime / 5.;
     // Update uniforms
     material.uniforms.uTime.value = elapsedTime;
+    materialParticles.uniforms.uTime.value = elapsedTime;
 
     // Render
     renderer.render(scene, camera);
