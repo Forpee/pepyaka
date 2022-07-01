@@ -1,4 +1,5 @@
 varying vec2 vUv;
+uniform float uTime;
 
 //	Simplex 3D Noise
 //	by Ian McEwan, Ashima Arts
@@ -85,6 +86,8 @@ float snoise(vec3 v){
             {
                 // vec4 mvPosition=modelViewMatrix*vec4(position,1.);
                 // gl_PointSize=100.*(1./-mvPosition.z);
+                
+                float noise=snoise(position*10.+uTime);
                 
                 gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);
                 
